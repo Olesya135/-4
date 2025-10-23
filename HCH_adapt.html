@@ -16,6 +16,7 @@
 
         :root {
             --primary-color: #6889e4;
+            --icon-color: #8f68e4;
             --secondary-color: #89cfe6;
             --accent-color: #34dbbd;
             --light-color: #e5eff8;
@@ -250,6 +251,13 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
         .card-image {
             width: 100%;
             height: 200px;
@@ -258,10 +266,15 @@
             margin-bottom: 1rem;
         }
 
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--icon-color);
+            flex-shrink: 0;
+        }
+
         .card h3 {
             color: var(--dark-color);
-            margin-bottom: 1rem;
-            text-align: center;
+            margin: 0;
         }
 
         .card p {
@@ -328,17 +341,59 @@
             background-color: var(--secondary-color);
             color: white;
             padding: 2rem 0;
-            text-align: center;
+        }
+
+        .footer-main {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .footer-contacts {
+            flex: 1;
+            text-align: right;
+            padding-right: 2rem;
+        }
+
+        .footer-nav {
+            flex: 1;
+            padding-left: 2rem;
+        }
+
+        .footer-nav ul {
+            list-style: none;
+        }
+
+        .footer-nav ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            transition: color 0.3s ease;
         }
 
         .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         .social-links {
             display: flex;
+            justify-content: center;
             margin: 1rem 0;
         }
 
@@ -360,6 +415,7 @@
             background-color: var(--accent-color);
             transform: translateY(-3px);
         }
+
 
         /* Адаптивность */
         @media (max-width: 992px) {
@@ -421,8 +477,30 @@
                 flex-direction: column;
             }
 
-            .form-container {
-                padding: 1.5rem;
+            .footer-main {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-contacts {
+                text-align: center;
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+
+            .footer-nav {
+                padding-left: 0;
+            }
+            .card-header {
+                gap: 10px;
+            }
+
+            .card-icon {
+                font-size: 2rem;
+            }
+
+            .card h3 {
+                font-size: 1.3rem;
             }
         }
 
@@ -447,6 +525,11 @@
             .card-image {
                 height: 150px;
             }
+
+            .card-icon {
+                font-size: 2rem;
+            }
+
         }
     </style>
 </head>
@@ -505,27 +588,39 @@
             <h2>Наши услуги</h2>
             <div class="cards">
                 <div class="card">
-                    <!-- Замените src на вашу ссылку на изображение -->
                     <img src="https://u2.9111s.ru/uploads/202401/18/239771c11f2f3148e57d45399e484056.jpg" alt="Веб-разработка" class="card-image">
-                    <h3>Веб-разработка</h3>
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>Веб-разработка</h3>
+                    </div>
                     <p>Создаем современные и адаптивные веб-сайты, которые легко использовать на любом устройстве.</p>
                     <div class="card-buttons">
                         <a href="#contact" class="btn" style="background-color: var(--primary-color);">Заказать</a>
                     </div>
                 </div>
                 <div class="card">
-                    <!-- Замените src на вашу ссылку на изображение -->
                     <img src="https://i.pinimg.com/originals/bb/fa/4a/bbfa4a7ed38243b96820e134b9e76dea.png" alt="Дизайн интерфейсов" class="card-image">
-                    <h3>Дизайн интерфейсов</h3>
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3>Дизайн интерфейсов</h3>
+                    </div>
                     <p>Разрабатываем интуитивные интерфейсы, которые нравятся пользователям и повышают эффективность.</p>
                     <div class="card-buttons">
                         <a href="#contact" class="btn" style="background-color: var(--primary-color);">Заказать</a>
                     </div>
                 </div>
                 <div class="card">
-                    <!-- Замените src на вашу ссылку на изображение -->
                     <img src="https://cdn.culture.ru/images/f1dbc5f3-ca41-5c40-9671-3407674947a4" alt="Консультации" class="card-image">
-                    <h3>Консультации</h3>
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Консультации</h3>
+                    </div>
                     <p>Помогаем улучшить существующие продукты и сделать их более удобными для пользователей.</p>
                     <div class="card-buttons">
                         <a href="#contact" class="btn" style="background-color: var(--primary-color);">Заказать</a>
@@ -572,13 +667,28 @@
 
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2025 НЧНСайт. Все права защищены.</p>
-                <div class="social-links">
-                    <a href="https://vk.com/olesya1354"><i class="fab fa-vk"></i></a>
-                    <a href="https://t.me/Olesya939"><i class="fab fa-telegram"></i></a>
+            <div class="footer-main">
+                <div class="footer-contacts">
+                    <h3>Контакты: </h3>
+                    <p><a href="tel:+79371777460" style="color: white; text-decoration: none;">8 937 177 74-60</a></p>
+                    <div class="social-links">
+                        <a href="https://vk.com/olesya1354"><i class="fab fa-vk"></i></a>
+                        <a href="https://t.me/Olesya939"><i class="fab fa-telegram"></i></a>
+                    </div>
                 </div>
+                <div class="footer-nav">
+                    <h3>Навигация</h3>
+                    <ul>
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#services">Услуги</a></li>
+                        <li><a href="#contact">Поддержка</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-content">
                 <p>Создано с вниманием к деталям и заботой о пользователе.</p>
+                <p>&copy; 2025 НЧНСайт. Все права защищены.</p>
             </div>
         </div>
     </footer>
@@ -634,7 +744,7 @@
             this.reset();
         });
 
-        // Простая валидация email
+        // Валидация email
         function validateEmail(email) {
             const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return re.test(email);
