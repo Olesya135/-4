@@ -3,334 +3,681 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Простой и удобный сайт</title>
+    <title>TechShop - Умные покупки</title>
     <style>
-        /* Сброс стилей и базовые настройки */
+        /* === Базовые сбросы и переменные === */
+        :root {
+            --primary: #2c5aa0;
+            --primary-dark: #1e3d72;
+            --secondary: #f8f9fa;
+            --accent: #28a745;
+            --text: #333;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --white: #ffffff;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --radius: 8px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #f8f9fa;
-            color: #333;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             line-height: 1.6;
+            color: var(--text);
+            background-color: var(--secondary);
         }
 
-        /* Контейнер для контента */
+        /* === Общие стили === */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* Шапка сайта */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        /* === Header === */
         header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header-content {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
-        }
-
-        /* Навигация */
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 1.5rem;
-        }
-
-        nav ul li a {
-            color: white;
+            color: var(--primary);
             text-decoration: none;
-            transition: color 0.3s;
         }
 
-        nav ul li a:hover {
-            color: #3498db;
+        .search-form {
+            display: flex;
+            flex: 0 1 400px;
         }
 
-        /* Основной контент */
-        main {
-            padding: 2rem 0;
+        .search-form input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius) 0 0 var(--radius);
+            font-size: 16px;
         }
 
+        .search-form button {
+            padding: 0 20px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            cursor: pointer;
+        }
+
+        .nav-main {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-main a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-main a:hover {
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .cart-count {
+            background: var(--accent);
+            color: var(--white);
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            margin-left: -8px;
+        }
+
+        /* === Hero Section === */
         .hero {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            padding: 4rem 0;
             text-align: center;
-            padding: 3rem 0;
-            background-color: #ecf0f1;
-            border-radius: 8px;
-            margin-bottom: 2rem;
         }
 
         .hero h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: #2c3e50;
         }
 
         .hero p {
             font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 1.5rem;
-            color: #7f8c8d;
+            margin-bottom: 2rem;
+            opacity: 0.9;
         }
 
-        .btn {
-            display: inline-block;
-            background-color: #3498db;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s;
+        /* === Categories === */
+        .categories {
+            padding: 3rem 0;
         }
 
-        .btn:hover {
-            background-color: #2980b9;
-        }
-
-        /* Секции */
-        .section {
-            margin-bottom: 3rem;
-        }
-
-        .section h2 {
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
             font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 0.5rem;
+            color: var(--text);
         }
 
-        /* Карточки */
-        .cards {
+        .categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
         }
 
-        .card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+        .category-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow);
         }
 
-        .card:hover {
+        .category-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
         }
 
-        .card h3 {
-            color: #2c3e50;
+        /* === Products === */
+        .products {
+            padding: 3rem 0;
+            background: var(--white);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--radius);
             margin-bottom: 1rem;
         }
 
-        /* Форма */
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .product-rating {
+            color: #ffc107;
+            margin-bottom: 1rem;
+        }
+
+        /* === Forms === */
+        .contact-section {
+            padding: 4rem 0;
+            background: var(--secondary);
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
         }
 
-        label {
+        .form-label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #2c3e50;
+            font-weight: 500;
+            color: var(--text);
         }
 
-        input, textarea, select {
+        .form-hint {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 16px;
+            transition: border-color 0.3s ease;
         }
 
-        input:focus, textarea:focus, select:focus {
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
             outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
         }
 
-        /* Подвал */
+        .form-input.error {
+            border-color: #dc3545;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        /* === Footer === */
         footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
+            background: var(--text);
+            color: var(--white);
+            padding: 3rem 0 1rem;
         }
 
-        /* Адаптивность */
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #ccc;
+        }
+
+        /* === Breadcrumbs === */
+        .breadcrumbs {
+            padding: 1rem 0;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .breadcrumbs a {
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .breadcrumbs a:hover {
+            color: var(--primary);
+        }
+
+        /* === Responsive Design === */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
-                text-align: center;
+                gap: 1rem;
             }
 
-            nav ul {
-                margin-top: 1rem;
-                justify-content: center;
+            .search-form {
+                flex: 1;
+                width: 100%;
             }
 
-            nav ul li {
-                margin: 0 0.75rem;
+            .nav-main {
+                gap: 1rem;
             }
 
             .hero h1 {
                 font-size: 2rem;
             }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">ПростойСайт</div>
-                <nav>
-                    <ul>
-                        <li><a href="#home">Главная</a></li>
-                        <li><a href="#about">О нас</a></li>
-                        <li><a href="#services">Услуги</a></li>
-                        <li><a href="#contact">Контакты</a></li>
-                    </ul>
+                <a href="#" class="logo">TechShop</a>
+
+                <form class="search-form">
+                    <input type="text" placeholder="Найти товары..." aria-label="Поиск товаров">
+                    <button type="submit">Найти</button>
+                </form>
+
+                <nav class="nav-main">
+                    <a href="#categories">Категории</a>
+                    <a href="#products">Популярное</a>
+                    <a href="#contact">Контакты</a>
                 </nav>
+
+                <div class="header-actions">
+                    <a href="#" aria-label="Избранное">❤️</a>
+                    <a href="#" aria-label="Корзина">
+                        🛒 <span class="cart-count">3</span>
+                    </a>
+                </div>
             </div>
         </div>
     </header>
 
-    <main class="container">
-        <section id="home" class="hero">
-            <h1>Добро пожаловать на наш сайт</h1>
-            <p>Мы создаем простые и удобные решения для ваших задач. Всего в несколько кликов вы найдете то, что ищете.</p>
-            <a href="#services" class="btn">Узнать больше</a>
-        </section>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs container">
+        <a href="#">Главная</a> / <span>Электроника</span>
+    </div>
 
-        <section id="about" class="section">
-            <h2>О нас</h2>
-            <p>Мы команда профессионалов, которая ценит простоту и удобство. Наша цель - создавать продукты, которые действительно работают и помогают людям.</p>
-            <p>Мы избегаем сложных интерфейсов и непонятного жаргона, чтобы каждый пользователь чувствовал себя комфортно.</p>
-        </section>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Техника для жизни и работы</h1>
+            <p>Качественные гаджеты по доступным ценам с быстрой доставкой</p>
+            <a href="#products" class="btn btn-accent">Смотреть товары</a>
+        </div>
+    </section>
 
-        <section id="services" class="section">
-            <h2>Наши услуги</h2>
-            <div class="cards">
-                <div class="card">
-                    <h3>Веб-разработка</h3>
-                    <p>Создаем современные и адаптивные веб-сайты, которые легко использовать.</p>
+    <!-- Categories -->
+    <section id="categories" class="categories">
+        <div class="container">
+            <h2 class="section-title">Популярные категории</h2>
+            <div class="categories-grid">
+                <a href="#" class="category-card">
+                    <h3>📱 Смартфоны</h3>
+                    <p>Новейшие модели</p>
+                </a>
+                <a href="#" class="category-card">
+                    <h3>💻 Ноутбуки</h3>
+                    <p>Для работы и игр</p>
+                </a>
+                <a href="#" class="category-card">
+                    <h3>🎧 Аудио</h3>
+                    <p>Наушники и колонки</p>
+                </a>
+                <a href="#" class="category-card">
+                    <h3>⌚ Гаджеты</h3>
+                    <p>Умные устройства</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="products">
+        <div class="container">
+            <h2 class="section-title">Рекомендуемые товары</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/300x200/2c5aa0/ffffff?text=Смартфон" alt="Смартфон Pro Max" class="product-image">
+                    <h3 class="product-title">Смартфон Pro Max 256GB</h3>
+                    <div class="product-rating">★★★★★</div>
+                    <div class="product-price">45 990 ₽</div>
+                    <button class="btn btn-primary" onclick="addToCart('Смартфон Pro Max')">В корзину</button>
                 </div>
-                <div class="card">
-                    <h3>Дизайн интерфейсов</h3>
-                    <p>Разрабатываем интуитивные интерфейсы, которые нравятся пользователям.</p>
+
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/300x200/28a745/ffffff?text=Ноутбук" alt="Игровой ноутбук" class="product-image">
+                    <h3 class="product-title">Игровой ноутбук RTX 4060</h3>
+                    <div class="product-rating">★★★★☆</div>
+                    <div class="product-price">89 990 ₽</div>
+                    <button class="btn btn-primary" onclick="addToCart('Игровой ноутбук')">В корзину</button>
                 </div>
-                <div class="card">
-                    <h3>Консультации</h3>
-                    <p>Помогаем улучшить существующие продукты и сделать их более удобными.</p>
+
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/300x200/6f42c1/ffffff?text=Наушники" alt="Беспроводные наушники" class="product-image">
+                    <h3 class="product-title">Беспроводные наушники Pro</h3>
+                    <div class="product-rating">★★★★★</div>
+                    <div class="product-price">12 490 ₽</div>
+                    <button class="btn btn-primary" onclick="addToCart('Беспроводные наушники')">В корзину</button>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="contact" class="section">
-            <h2>Свяжитесь с нами</h2>
-            <p>Есть вопросы? Напишите нам, и мы обязательно ответим в течение 24 часов.</p>
+    <!-- Contact Form -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Остались вопросы?</h2>
+            <div class="form-container">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Ваше имя *</label>
+                        <input type="text" id="name" class="form-input" required>
+                        <div class="form-hint">Как к вам обращаться</div>
+                    </div>
 
-            <form id="contact-form">
-                <div class="form-group">
-                    <label for="name">Ваше имя</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email *</label>
+                        <input type="email" id="email" class="form-input" required>
+                        <div class="form-hint">На этот адрес придет ответ</div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="email">Электронная почта</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
+                    <div class="form-group">
+                        <label for="topic" class="form-label">Тема вопроса</label>
+                        <select id="topic" class="form-select">
+                            <option value="">Выберите тему</option>
+                            <option value="delivery">Доставка</option>
+                            <option value="warranty">Гарантия</option>
+                            <option value="product">О товаре</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <label for="subject">Тема сообщения</label>
-                    <select id="subject" name="subject">
-                        <option value="general">Общий вопрос</option>
-                        <option value="service">Запрос об услуге</option>
-                        <option value="support">Техническая поддержка</option>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">Сообщение *</label>
+                        <textarea id="message" class="form-textarea" rows="5" required></textarea>
+                        <div class="form-hint">Опишите ваш вопрос подробно</div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="message">Сообщение</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
-                </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Отправить вопрос</button>
+                </form>
+            </div>
+        </div>
+    </section>
 
-                <button type="submit" class="btn">Отправить сообщение</button>
-            </form>
-        </section>
-    </main>
-
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2023 ПростойСайт. Все права защищены.</p>
-            <p>Создано с вниманием к деталям и заботой о пользователе.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TechShop</h3>
+                    <p>Магазин качественной электроники с 2020 года</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Покупателям</h3>
+                    <a href="#">Доставка и оплата</a>
+                    <a href="#">Гарантия</a>
+                    <a href="#">Возврат</a>
+                    <a href="#">Вопросы и ответы</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <a href="tel:+78001234567">8 (800) 123-45-67</a>
+                    <a href="mailto:info@techshop.ru">info@techshop.ru</a>
+                    <p>Ежедневно с 9:00 до 21:00</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 TechShop. Все права защищены.</p>
+            </div>
         </div>
     </footer>
 
     <script>
-        // Плавная прокрутка к якорям
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
+        // Корзина
+        let cartCount = 3;
 
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
+        function addToCart(productName) {
+            cartCount++;
+            document.querySelector('.cart-count').textContent = cartCount;
 
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+            // Показываем уведомление
+            showNotification(`Товар "${productName}" добавлен в корзину!`);
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--accent);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: var(--radius);
+                box-shadow: var(--shadow);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Валидация формы
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            if (!isValidEmail(email)) {
+                showFormError('email', 'Введите корректный email адрес');
+                return;
+            }
+
+            if (message.length < 10) {
+                showFormError('message', 'Сообщение должно содержать не менее 10 символов');
+                return;
+            }
+
+            // Имитация успешной отправки
+            showNotification('Ваш вопрос отправлен! Мы ответим в течение 24 часов.');
+            this.reset();
+        });
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showFormError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            field.classList.add('error');
+
+            let errorElement = field.parentNode.querySelector('.error-message');
+            if (!errorElement) {
+                errorElement = document.createElement('div');
+                errorElement.className = 'error-message';
+                field.parentNode.appendChild(errorElement);
+            }
+            errorElement.textContent = message;
+        }
+
+        // Убираем ошибки при вводе
+        document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
+            input.addEventListener('input', function() {
+                this.classList.remove('error');
+                const errorElement = this.parentNode.querySelector('.error-message');
+                if (errorElement) {
+                    errorElement.remove();
                 }
             });
         });
 
-        // Обработка формы
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Анимации
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
 
-            alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
-            this.reset();
-        });
-
-        // Простая валидация email
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-
-        // Добавляем валидацию в реальном времени
-        document.getElementById('email').addEventListener('blur', function() {
-            if (this.value && !validateEmail(this.value)) {
-                this.style.borderColor = '#e74c3c';
-            } else {
-                this.style.borderColor = '#ddd';
-            }
+        // Наблюдаем за карточками
+        document.querySelectorAll('.product-card, .category-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
         });
     </script>
+
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
 </body>
 </html>
