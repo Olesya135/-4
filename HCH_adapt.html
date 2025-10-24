@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Найди что нужно</title>
+    <title>Find what need</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Сброс стилей и базовые настройки */
@@ -108,7 +108,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(116, 142, 210, 0.9);
+            background-color: rgba(116, 165, 210, 0.9);
             z-index: 200;
             flex-direction: column;
             justify-content: center;
@@ -159,7 +159,7 @@
         .hero {
             text-align: center;
             padding: 3rem 0;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(160deg, var(--primary-color), var(--secondary-color));
             color: white;
             border-radius: 8px;
             margin-bottom: 2rem;
@@ -218,7 +218,7 @@
 
         /* Секции */
         .section {
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
         }
 
         .section h2 {
@@ -228,6 +228,66 @@
             border-bottom: 2px solid var(--accent-color);
             padding-bottom: 0.5rem;
         }
+
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .about-text .lead {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid #f0f0f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, hsl(262, 75%, 55%), hsl(168, 70%, 60%));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .feature-card h3 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
 
         /* Карточки */
         .cards {
@@ -537,7 +597,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <span>НЧНСайт</span>
+                    <span>FWNsite</span>
                 </div>
 
                 <nav class="desktop-nav">
@@ -579,8 +639,45 @@
 
         <section id="about" class="section">
             <h2>О нас</h2>
-            <p>Мы команда профессионалов, которая ценит простоту и удобство. Наша цель - создавать продукты, которые действительно работают и помогают людям.</p>
-            <p>Мы избегаем сложных интерфейсов и непонятного жаргона, чтобы каждый пользователь чувствовал себя комфортно.</p>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="lead">Мы команда профессионалов, которая ценит простоту и удобство. Наша цель - создавать продукты, которые действительно работают и помогают людям.</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Надежность и качество</h3>
+                        <p>Гарантируем стабильную работу и высокое качество продукции</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Современные технологии</h3>
+                        <p>Используем актуальные инструменты и передовые методики</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Командная работа</h3>
+                        <p>Объединяем лучших специалистов</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3>Простота и ясность</h3>
+                        <p>Создаем интуитивно понятные интерфейсы без лишней сложности</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="services" class="section">
