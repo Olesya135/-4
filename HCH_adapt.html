@@ -396,6 +396,34 @@
             font-weight: bold;
             color: var(--dark-color);
         }
+        /* Стили для текстового поля сообщения */
+        #message {
+            resize: vertical; /* Разрешить изменение размера только по вертикали */
+            min-height: 120px; /* Минимальная высота */
+            max-height: 300px; /* Максимальная высота */
+            overflow-y: auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.5;
+        }
+
+        /* Стилизация скроллбара */
+        #message::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #message::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        #message::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        #message::-webkit-scrollbar-thumb:hover {
+            background: #5a7de0;
+        }
 
         input, textarea, select {
             width: 100%;
@@ -788,7 +816,7 @@
 
                     <div class="form-group">
                         <label for="subject">Тема сообщения</label>
-                        <select id="subject" name="subject">
+                        <select id="subject" name="subject" required>
                             <option value="general">Общий вопрос</option>
                             <option value="service">Запрос об услуге</option>
                             <option value="support">Техническая поддержка</option>
@@ -797,7 +825,7 @@
 
                     <div class="form-group">
                         <label for="message">Сообщение</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <textarea id="message" name="message" rows="4" required></textarea>
                     </div>
 
                     <button type="submit" class="btn">Отправить сообщение</button>
@@ -814,6 +842,7 @@
                         <h2>FWNSite</h2>
                     </div>
                 </div>
+
                 <div class="footer-section footer-nav">
                     <h2>Навигация</h2>
                     <ul>
@@ -823,6 +852,7 @@
                         <li><a href="#contact">Поддержка</a></li>
                     </ul>
                 </div>
+
                 <div class="footer-section footer-contacts">
                     <h2>Контакты</h2>
                     <ul>
@@ -834,6 +864,7 @@
                         <a href="https://t.me/Olesya939"><i class="fab fa-telegram"></i></a>
                     </div>
                 </div>
+
                 <p>Создано с вниманием к деталям и заботой о пользователе.
                     <br>&copy; 2025 НЧНСайт. Все права защищены.
                 </p>
@@ -884,14 +915,6 @@
             });
         });
 
-        // Обработка формы
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
-            this.reset();
-        });
-
         // Валидация email
         function validateEmail(email) {
             const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -937,7 +960,50 @@
                 cardImages[cardIndex].src = imageUrl;
             }
         }
+    // Обработка формы
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
 
+        console.log("Начало отправки формы...");
+
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Отправка...';
+        submitBtn.disabled = true;
+
+        const formData = new FormData(this);
+        console.log("Данные формы:", Object.fromEntries(formData));
+
+        fetch('sendmail.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            console.log("Статус ответа:", response.status);
+            return response.text();
+        })
+        .then(data => {
+            console.log("Ответ сервера:", data);
+
+            if (data === 'success') {
+                alert('Сообщение отправлено! Мы свяжемся с вами в ближайшее время.');
+                this.reset();
+            } else if (data.startsWith('error:')) {
+                const errorMsg = data.substring(6);
+                alert('❌ ' + errorMsg);
+            } else {
+                alert('❌ Неизвестная ошибка: ' + data);
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка fetch:', error);
+            alert('❌ Ошибка сети. Проверьте подключение к интернету.');
+        })
+        .finally(() => {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
+    });
     </script>
 </body>
 </html>
